@@ -1,0 +1,13 @@
+{
+  "title": "NoobAI-XL V-Pred 1.0 (ComfyUI)",
+  "description": "NoobAI-XL V-Pred 1.0 を焼き込んだ ComfyUI ワーカー。ワークフローは API の input.workflow で渡すため、CFG・サンプラー・出力サイズを再ビルドなしで調整できる。",
+  "type": "serverless",
+  "category": "image",
+  "config": {
+    "runsOn": "GPU",
+    "containerDiskInGb": 30,
+    "gpuCount": 1,
+    "gpuIds": "ADA_24,ADA_32_PRO",
+    "allowedCudaVersions": ["12.8"]
+  }
+}

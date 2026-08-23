@@ -1,0 +1,103 @@
+{
+  "tests": [
+    {
+      "name": "noobai_vpred_portrait_832x1216",
+      "input": {
+        "workflow": {
+          "1": {
+            "class_type": "CheckpointLoaderSimple",
+            "inputs": {
+              "ckpt_name": "NoobAI-XL-Vpred-v1.0.safetensors"
+            }
+          },
+          "2": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+              "clip": [
+                "1",
+                1
+              ],
+              "text": "masterpiece, best quality, newest, absurdres, highres, safe, very awa, 1girl, brown ponytail, sportswear, cheerful smile, solo, upper body, looking at viewer, simple background, dark background"
+            }
+          },
+          "3": {
+            "class_type": "CLIPTextEncode",
+            "inputs": {
+              "clip": [
+                "1",
+                1
+              ],
+              "text": "nsfw, worst quality, old, early, low quality, lowres, signature, username, logo, bad hands, mutated hands, mammal, anthro, furry, ambiguous form, feral, semi-anthro, text, watermark, border, cropped, head out of frame, out of frame"
+            }
+          },
+          "4": {
+            "class_type": "EmptyLatentImage",
+            "inputs": {
+              "width": 832,
+              "height": 1216,
+              "batch_size": 1
+            }
+          },
+          "5": {
+            "class_type": "KSampler",
+            "inputs": {
+              "model": [
+                "1",
+                0
+              ],
+              "positive": [
+                "2",
+                0
+              ],
+              "negative": [
+                "3",
+                0
+              ],
+              "latent_image": [
+                "4",
+                0
+              ],
+              "seed": 1001,
+              "steps": 30,
+              "cfg": 5,
+              "sampler_name": "euler",
+              "scheduler": "normal",
+              "denoise": 1
+            }
+          },
+          "6": {
+            "class_type": "VAEDecode",
+            "inputs": {
+              "samples": [
+                "5",
+                0
+              ],
+              "vae": [
+                "1",
+                2
+              ]
+            }
+          },
+          "7": {
+            "class_type": "SaveImage",
+            "inputs": {
+              "images": [
+                "6",
+                0
+              ],
+              "filename_prefix": "noobai"
+            }
+          }
+        }
+      },
+      "timeout": 900000
+    }
+  ],
+  "config": {
+    "gpuTypeId": "NVIDIA GeForce RTX 4090",
+    "gpuCount": 1,
+    "allowedCudaVersions": [
+      "12.8"
+    ]
+  }
+}
