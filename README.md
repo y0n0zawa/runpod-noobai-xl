@@ -27,6 +27,8 @@ And reaching four steps means dropping CFG to 1, which makes the negative prompt
 
 One model family per image. An earlier attempt bundled this checkpoint alongside Qwen-Image-Edit, whose weights alone are 29 GB; the RunPod Hub build stops at 30 minutes and never produced a tag. Keeping them apart also means updating one does not slow the other's cold start.
 
+The image is built in CI and pushed to GHCR rather than built by the Hub. The Hub's registry only answers to endpoints created through its own deploy flow — point an API-created endpoint at a `registry.runpod.net` tag and every worker fails with `Failed to get Hub registry auth`. A public GHCR tag has no such coupling, so the endpoint can be created entirely from the API.
+
 The base tag has to match the CUDA version you declare. `5.8.6-base` installs whatever PyTorch build comfy-cli defaults to, which is newer than CUDA 12.8; pairing it with `"allowedCudaVersions": ["12.8"]` gets you a worker that never starts. Use the `-cuda12.8.1` tag instead.
 
 ## Recommended settings
